@@ -1,0 +1,194 @@
+body{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* background-color:white */
+}
+.topbar{
+  width:100%;
+  height: 50px;
+  background-color: white;
+  border: 1px solid black;
+  
+}
+
+.topbar-wrapper{
+  display:flex;
+  justify-content: space-between;
+}
+.topbadge-iconcontainer{
+  /* width:100%; */
+  display:flex;
+  justify-content: center;
+  
+  /* border: 1px solid black; */
+  
+}
+.top-right{
+  /* border: 1px solid black; */
+  width: 40%;
+  padding: 0.3%;
+  
+}
+.account-iconcontainer{
+  display:flex;
+  justify-content:flex-end; 
+  /* border: 1px solid red; */
+  width: 30%;
+
+}
+.titlebar-container{
+  display:flex;
+  justify-content: space-between;
+}
+.summary-cardlist{
+  display:flex;
+  justify-content: space-around;
+}
+.summary-card{
+  display:flex;
+  flex-direction: column;
+  /* align-items:center;   */
+  border-radius: 4px;
+  width:15rem;
+  height: 5rem;
+  color:white
+  
+
+}
+
+.progressvalue-container{
+  display:flex;
+  justify-content: space-between;
+  
+}
+
+.progressList-container{
+  /* width:30%;
+  height: 30%; */
+  /* border:1px solid rgb(243, 238, 238); */
+  margin:1%;
+}
+
+.project-container {
+  /* width:50%; */
+  /* border: 1px solid black; */
+  margin: 3%;
+  /* display:inline */
+}
+
+.progress{
+  border-radius: 10px;
+}
+
+.illustration-container{
+  /* width:40%; */
+  /* height: 20%; */
+  /* border:1px solid rgb(243, 238, 238); */
+  margin:1%;
+  
+}
+.projects{
+  /* display:inline-block; */
+  float: left;
+  padding: 15px; 
+  
+}
+
+.content-area{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.inner-container{
+  
+  /* border:1px solid rgb(243, 238, 238); */
+  margin:1%;
+}
+
+.accountinglist-container{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:5px;
+
+}
+/* .left-container{
+  float:left
+}
+.right-container{
+  float:right
+} */
+
+.side-bar{
+  border:1px solid black;
+  width:100%;
+  height:100%;
+}
+
+.bottom-bar{
+  display:flex
+}
+.left-bar{
+  width:15%;
+  height: 100vh;
+  border:1px solid black;
+}
+.right-bar{
+  width:85%;
+  border:1px solid black;
+}
+.add-user, .update-user{
+  display:flex;
+  flex-direction: column;
+  gap:15px;
+}
+
+.user-form {
+  width:500px;
+  margin: 10px auto;
+}
+.userform-title{
+  text-align: center;
+  margin: 5px 0;
+  color: brown;
+}
+
+
+table{
+  min-width: 1000px;
+  margin: auto;    
+  border-collapse: collapse;
+  font-size: 1em; 
+  
+
+}
+
+th{
+  position: sticky;
+  top:0;
+}
+
+table, tr, th, td{
+  border: 2px solid black;
+  
+}
+
+tr{
+  height: 20px;
+}
+
+th, td{
+  padding: 12px 15px;
+}
+tbody, tr{
+  border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+thead tr{
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+tr:nth-child(even) {
+  background-color: #f3f3f3;
+}
