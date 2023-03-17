@@ -1,14 +1,60 @@
-import { Button, TextField } from '@mui/material';
+import { Button, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import {useState, useEffect} from 'react'
+
 
 export function AddUsers({userData, setuserData}) {
-  const [id, setId] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [age, setAge] = React.useState("");
+  
+  const [id, setId] = useState("")
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [teacher, setTeacher] = useState("")
+
+  const [teacherid, setTeacherid] = useState("")
+
+  const [allteacher, setAllTeacher] = useState([])
+
+  const adduser =() =>{
+
+    const newuser = {
+      id:id,
+      lastname: lastName,
+      firstname: firstName,      
+      age:age,
+      teacherid:teacher
+    }
+    
+    console.log(newuser)
+
+    fetch(`https://6409f9596ecd4f9e18c1111c.mockapi.io/userinfo`,
+    {method: "POST",
+    headers:{
+      'Content-Type': "application/json",
+    },   
+    body:JSON.stringify(newuser),})
+    .then(() => console.log(newuser) )
+    .then(() => navigate("/view-users"))
+   
+
+  } 
+
+  const getTeacherInfo = () => {  
+ 
+    fetch(`https://6409f9596ecd4f9e18c1111c.mockapi.io/teacherinfo/`)
+    .then((res) => res.json())
+    .then((data) => {
+      setAllTeacher(data)
+  })
+    
+  }
+    
+  useEffect(() => {getTeacherInfo()}, [])
 
   const navigate = useNavigate();
+
+ 
   return (
     <div>
       <div className="user-form">
@@ -18,7 +64,7 @@ export function AddUsers({userData, setuserData}) {
             <TextField id="outlined-basic"
              label="ID"
              variant="outlined" 
-             onChange={(event) => setId(event.target.value) }
+            onChange={(event) => setId(event.target.value) }
               />
             <TextField id="outlined-basic"
              label="FIRST NAME" 
@@ -32,33 +78,29 @@ export function AddUsers({userData, setuserData}) {
              label="AGE" 
              variant="outlined" 
              onChange={(event) => setAge(event.target.value) }/>
-            <Button variant="contained"
-            onClick={() =>
-            {
-              const newUser = {
-                id: id,                
-                lastName: lastName,
-                firstName:firstName,
-                age: age,
 
-              };             
-
-              setuserData([...userData, newUser]) 
-              debugger;
-
-              
-              userData.includes(newUser.id) ? (
-                alert("User added successfully")
-              ) : (
-                alert("User not added due to server issue")
-              )
-              navigate("/view-users") 
+            {/* <InputLabel id="demo-simple-select-label">Teacher</InputLabel>  */}
+            
+            <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={teacher}
+            label="teacher"
+            onChange={(event) => setTeacher(event.target.value)}         
+            >
+              {allteacher.map((t) =>           
                 
-
-              
-            }
-
-            }>ADD</Button>
+                <MenuItem                                 
+                 value={t.id}>{t.firstname}
+                </MenuItem>              
+               
+              )}            
+            
+          </Select>
+            <Button variant="contained"
+            onClick={() => adduser()}    
+            
+            >ADD {teacher} {teacherid}</Button>
 
             
           

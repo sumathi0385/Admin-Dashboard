@@ -14,55 +14,75 @@ import { UpdateUsers } from './UpdateUsers';
 import { Paper} from '@mui/material';
 import { ArgumentAxis, BarSeries, Chart, ValueAxis } from '@devexpress/dx-react-chart-material-ui';
 import { AddUsers } from './AddUsers';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+
 
 function App(){
-  const navigate = useNavigate();
 
-  const [userData, setuserData] = React.useState([
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    { id: 10, lastName: 'edwin', firstName: 'galwin', age: 10 },
-  ])
+  const [userData, setuserData] = React.useState([])
+
+  const navigate = useNavigate();
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'light',
+    },
+  });
+
+  // const [userData, setuserData] = React.useState([
+  //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 17, teacherid: 3 },
+  //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 12, teacherid: 3 },
+  //   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 15, teacherid: 1 },
+  //   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16, teacherid: 3 },
+  //   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: 13, teacherid: 2 },
+  //   { id: 6, lastName: 'Melisandre', firstName: null, age: 15, teacherid: 1 },
+  //   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 14, teacherid: 1 },
+  //   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 16, teacherid: 2 },
+  //   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 15, teacherid: 1 },
+  //   { id: 10, lastName: 'edwin', firstName: 'galwin', age: 10, teacherid: 2 },
+  // ])
   
   const initialformstate = {id:"null", firstName:"", lastName:"", age:""};
   const [currentUser, setCurrentuser] = React.useState(initialformstate);
 
   const editUser = (user) => {
     console.log(user)
-    navigate("/update-users");    
-    setCurrentuser({id:user.id, firstName:user.firstName, lastName:user.lastName, age:user.age})  
+    navigate(`/update-users/${user.id}`);    
+    // setCurrentuser({id:user.id, firstName:user.firstName, lastName:user.lastName, age:user.age})  
 
   } 
 
   
   return (
-    <div>     
-      
-      <Routes>
-        <Route path="/" element={<Home />} />         
-        <Route path="/view-users" element={<ViewAndDeleteUsers userData={userData} setuserData={setuserData} editUser={editUser}  />} /> 
-          <Route path="/update-users" element={<UpdateUsers
-            currentUser={currentUser}
-            userData={userData}
-            setuserData = {setuserData}           
-          />}
-        />           
-          
-        <Route path="/add-users" element={<AddUsers userData={userData} setuserData={setuserData}   />} />            
-      </Routes>
+    <div>
+     
 
+
+
+    
+    <ThemeProvider theme={darkTheme}>
+      <div>     
+        
+        <Routes>
+          <Route path="/" element={<Common />} />         
+          <Route path="/view-users" element={<ViewAndDeleteUsers  />} /> 
+            <Route path="/update-users/:id" element={<UpdateUsers
+              currentUser={currentUser}
+              userData={userData}
+              setuserData = {setuserData}           
+            />}
+          />           
+            
+          <Route path="/add-users" element={<AddUsers userData={userData} setuserData={setuserData}   />} />            
+        </Routes>
+
+      </div>
+    </ThemeProvider>
     </div>
   )
 }
 
-function Home() {
+export function Home({children}) {
   return(
 
     <div>        
@@ -77,27 +97,7 @@ function Home() {
           
         </div>
         <div className="right-bar"> 
-          <div>
-            <TitleBar />
-            <SummaryCardList />            
-          </div>
-          <div className="content-area">
-           <div className="inner-container">
-           <ProgressList />
-            </div>
-          <div className="inner-container">
-           <Illustration />
-           </div >
-             <div className="inner-container">
-              <AccountingCardList />
-             </div>
-            <div className="inner-container">
-              <ContactList />
-             </div>
-             {/* <div className="inner-container">
-             <DisplayGraph />
-             </div> */}
-           </div>
+         {children}
         </div>
       </div>
 
@@ -152,7 +152,34 @@ function Home() {
   
 }
 
+function Common(){
+  return(
 
+    < Home >
+       <div>
+            <TitleBar />
+            <SummaryCardList />            
+          </div>
+          <div className="content-area">
+           <div className="inner-container">
+           <ProgressList />
+            </div>
+          <div className="inner-container">
+           <Illustration />
+           </div >
+             <div className="inner-container">
+              <AccountingCardList />
+             </div>
+            <div className="inner-container">
+              <ContactList />
+             </div>
+             {/* <div className="inner-container">
+             <DisplayGraph />
+             </div> */}
+           </div>
+    </Home>
+  )
+}
 
 function SideBar(){
   return(

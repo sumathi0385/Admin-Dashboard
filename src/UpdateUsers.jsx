@@ -1,19 +1,50 @@
 import * as React from 'react';
 import { Button, TextField } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export function UpdateUsers({currentUser, updateuser, userData, setuserData}) {
-  console.log(currentUser);
-  console.log(currentUser.id); //Need clarity on how to print specific id
+export function UpdateUsers() {
+
+const {id} = useParams();
+const [firstName, setFirstName] = React.useState("");
+const [lastName, setLastName] = React.useState("");
+const [age, setAge] = React.useState(""); 
+// const [user, setUser] = React.useState([]) 
+
+const getusers = () => {
+  fetch(`https://6409f9596ecd4f9e18c1111c.mockapi.io/userinfo/${id}`)
+  .then((res) => res.json())
+  .then((data) => {
+    setFirstName(data.firstName)
+    setLastName(data.lastName)
+    setAge(data.age)
+  })
+
+}
+
+React.useEffect(() => getusers(), [])
+
+const updateusers =async() =>{
+  const updateduserinfo = { 
+
+        firstName:firstName,
+        lastName: lastName,        
+        age: age,
+      };
+      
+      await fetch(`https://6409f9596ecd4f9e18c1111c.mockapi.io/userinfo/${id}`,
+      {method: "PUT", 
+      headers:{
+        'Content-Type': "application/json",
+      },   
+      body:JSON.stringify(updateduserinfo),
+    }).then(navigate("/view-users"))
+}
+
   
-const [user, setUser] = React.useState(currentUser) 
-
-  const [id, setId] = React.useState(currentUser.id);
-  const [firstName, setFirstName] = React.useState(currentUser.firstName);
-  const [lastName, setLastName] = React.useState(currentUser.lastName);
-  const [age, setAge] = React.useState(currentUser.age); 
 
   const navigate = useNavigate();
+
+  console.log(firstName)
   
   return (    
     <div>
@@ -26,7 +57,7 @@ const [user, setUser] = React.useState(currentUser)
             label= "ID"
             
             variant="outlined"
-            onChange={(event) => setId(event.target.value) }
+            // onChange={(event) => setId(event.target.value) }
             disabled="true"
             value={id}/>
           <TextField id="outlined-basic"
@@ -44,23 +75,8 @@ const [user, setUser] = React.useState(currentUser)
             variant="outlined"
             onChange={(event) => setAge(event.target.value) }
              value={age}/>
-          <Button 
-        
-          onClick={()=> {
-            const updateduserinfo = {
-              id: id,                
-              lastName: lastName,
-              firstName:firstName,
-              age: age,
-            };            
-
-            setuserData(userData.map((user) => (user.id ===currentUser.id ? ({...user, ...updateduserinfo}) : (user)) ));
-            console.log(userData)
-            navigate("/view-users"); 
-            userData.includes(currentUser.id)          
-
-          } }
-          variant="contained"         
+          <Button onClick={()=> updateusers()}                        
+            variant="contained"         
             
             >UPDATE</Button>
 
